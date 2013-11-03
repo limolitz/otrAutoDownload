@@ -42,3 +42,4 @@ else
 fi
 
 # decode new files
+$otrAutoDownloadPath/otrDecodeAllFiles.sh $otrAutoDownloadPath &
