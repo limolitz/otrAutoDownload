@@ -6,6 +6,17 @@ fi
 
 source $1/otr.conf
 
+lockFile="$1/otrDecodeAllFiles.lock"
+
+if [ -f "$1/otrDecodeAllFiles.lock" ]; then
+	echo "otrDecodeAllFiles.sh already running."
+        exit 1
+fi
+
+
+touch $lockFile
+echo $$ > $lockFile
+
 find $OTRDOWNLOADPATH/*.otrkey | while read file; do
     #get media file name, that is, remove the trailing .otrkey
     mediafile=$(echo $(basename $file) | grep -oP ".*[^\.otrkey]")
@@ -30,3 +41,5 @@ find $OTRDOWNLOADPATH/*.otrkey | while read file; do
         fi
     fi
 done
+
+/bin/rm $lockFile
