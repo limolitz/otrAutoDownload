@@ -15,7 +15,7 @@ $1/dropboxUploader/dropbox_uploader.sh download $OTRDROPBOXPATH $inFile
 # grep for torrent link
 /usr/bin/tr -d '=\n' < $inFile | /bin/grep -oP '"http://81.95.11.2.*xbt_torrent_create.php[^"]*[a-z]"' | /bin/grep -oP "3D.*otrkey" | /bin/grep -oP '[^3D].*' >> $outFile
 # grep for direct download link for happy hour download
-/bin/grep -oP "http://81.95.11.22.*.otrkey" $inFile >> $OTRDIRECTLINKFILE
+/bin/grep -oP "http://81.95.11.22.*.otrkey" $inFile >> $1/otrHappyHourLinks.txt
 # grep for filename from direct download link for torrent download
 /bin/grep -oP "http://81.95.11.22.*.otrkey" $inFile | grep -oP "[^/]*otrkey" >> $outFile
 cat $outFile | while read line; do

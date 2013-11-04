@@ -14,7 +14,7 @@ touch $lockFile
 echo $$ > $lockFile
 echo -n "" > $tmpFile
 
-uniq $OTRDIRECTLINKFILE | while read line; do
+uniq $1/otrHappyHourLinks.txt | while read line; do
    /bin/echo "Downloading $line"
    /usr/bin/aria2c $line -d /media/hdd/aria2 -m 0 --retry-wait=30 --auto-file-renaming=false --on-download-complete= >/dev/null
    download=$?
@@ -42,6 +42,6 @@ uniq $OTRDIRECTLINKFILE | while read line; do
     fi
 done
 
-/bin/rm $OTRDIRECTLINKFILE
-mv $tmpFile $OTRDIRECTLINKFILE
+/bin/rm $1/otrHappyHourLinks.txt
+mv $tmpFile $1/otrHappyHourLinks.txt
 /bin/rm $lockFile

@@ -1,0 +1,28 @@
+# your confidentials
+OTREMAIL="user@example.com"
+OTRPASSWORD="secret"
+
+# where downloaded otrkeys should be stored
+OTRDOWNLOADPATH="/home/user/downloads"
+
+# where decoded videos should be placed
+OTROUTPUTPATH="/home/user/Videos"
+
+# Path inside your Dropbox where the text of the EMail will arrive (via IFTTT)
+OTRDROPBOXPATH="ifttt/Gmail/otr.txt"
+
+# Where the qemu package is installed
+# Get it here: http://kdserv.dyndns.org/2013-09-09-otr-chroot.tar.bz2.torrent
+# and extract it into a folder which you put here
+OTRQEMUPATH="/home/user/bin/otr"
+
+# When should the happy hour download end, usually 7:30 am CE(S)T
+OTRENDHAPPYHOURHOUR=7
+OTRENDHAPPYHOURMINUTE=30
+
+# When should the happy hour download start, usually 1:10 AM CE(S)T (I'm not too sure about daylight saving time)
+OTRSTARTHAPPYHOURHOUR=1
+OTRSTARTHAPPYHOURMINUTE=10
+
+# if the script should delete decoded otrkeys
+OTRDELETEAFTERDECODING=false
