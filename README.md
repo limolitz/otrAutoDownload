@@ -14,10 +14,10 @@ Install
 ```
 
 )
-* Clone into your ~/bin: 
+* Clone into your ~/bin (create folder if not existing): 
 
 ```bash
- cd ~/bin && git clone https://github.com/wasmitnetzen/otrAutoDownload.git
+ cd && [ -d bin ] || mkdir bin && cd ~/bin && git clone https://github.com/wasmitnetzen/otrAutoDownload.git
 ```
 
 * Fetch submodule:
