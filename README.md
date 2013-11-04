@@ -7,6 +7,7 @@ Script to download recordings from onlinetvrecorder.com automatically
 
 Install
 =======
+* Install dependencies: curl, aria2 and git (on Ubuntu/Debian: ```sudo apt-get install curl aria2 git```
 * Clone into your ~/bin: 
 ```
 cd ~/bin && git clone https://github.com/wasmitnetzen/otrAutoDownload.git
