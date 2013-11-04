@@ -19,6 +19,7 @@ Install
 ```bash
  cd && [ -d bin ] || mkdir bin
  cd ~/bin && git clone https://github.com/wasmitnetzen/otrAutoDownload.git
+ cd otrAutoDownload
 ```
 
 * Fetch submodule:
