@@ -35,7 +35,10 @@ find $OTRDOWNLOADPATH/*.otrkey | while read file; do
         then
             echo "$mediafile not decoded. Will do."
             $1/otrDecode.sh $1 $file
-	    echo $mediafile >> $1/otrDecoded.txt
+            RETVAL2=$?
+            if [ $RETVAL2 -eq 1 ]; then
+                echo $mediafile >> $1/otrDecoded.txt
+            fi
         else
             echo "$mediafile already decoded once."
         fi
