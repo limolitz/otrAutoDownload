@@ -7,3 +7,4 @@ fi
 source $1/otr.conf
 echo "Decoding $2 with user $OTREMAIL into $OTROUTPUTPATH"
 $OTRQEMUPATH/bin/qemu-x86_64 -L $OTRQEMUPATH $OTRQEMUPATH/bin64/otrdecoder-64 -e $OTREMAIL -p $OTRPASSWORD -i $2 -o $OTROUTPUTPATH
+exit $?
