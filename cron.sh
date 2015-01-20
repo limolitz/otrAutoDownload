@@ -27,16 +27,17 @@ then
   fi
 else
   # start downloads if in happy hour
-  echo -n "It is $(env TZ=Europe/Berlin date +%H:%M)h, start script between $OTRSTARTHAPPYHOURHOUR:$OTRSTARTHAPPYHOURMINUTE h and $OTRENDHAPPYHOURHOUR:$OTRENDHAPPYHOURMINUTE h: "
+  #echo -n "It is $(env TZ=Europe/Berlin date +%H:%M)h, start script between $OTRSTARTHAPPYHOURHOUR:$OTRSTARTHAPPYHOURMINUTE h and $OTRENDHAPPYHOURHOUR:$OTRENDHAPPYHOURMINUTE h: "
   startTime=$(($OTRSTARTHAPPYHOURHOUR*60+$OTRSTARTHAPPYHOURMINUTE))
   currentTime=$(($(env TZ=Europe/Berlin date +%_H)*60+$(env TZ=Europe/Berlin date +%_M)))
   #echo "$startTime vs. $currentTime"
   if (( $currentTime > $startTime && $currentTime < $endTime ))
   then
-    echo "Start script."
+    echo "Start Happy Hour Downloads."
     $otrAutoDownloadPath/otrHappyHour.sh $otrAutoDownloadPath &
   else
-    echo "Don't start Happy Hour Script."
+    #echo "Don't start Happy Hour Script."
+    true
   fi
 fi
 
