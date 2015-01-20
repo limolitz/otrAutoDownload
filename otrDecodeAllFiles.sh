@@ -40,12 +40,14 @@ find $OTRDOWNLOADPATH/*.otrkey 2>/dev/null | while read file; do
             echo "Decode $mediafile" >> $logFile
             $1/otrDecode.sh $1 $file
             RETVAL2=$?
-            if [ $RETVAL2 -eq 1 ]
+            if [ $RETVAL2 -eq 0 ]
             then
                 echo "$mediafile successfully decoded." >> $logFile
+                echo "$mediafile successfully decoded."
                 echo $mediafile >> $1/otrDecoded.txt
             else
                 echo "Error while decoding $mediafile: $RETVAL2" >> $logFile
+                echo "Error while decoding $mediafile: $RETVAL2"
             fi
         else
             echo "$mediafile already decoded once." >> $logFile
