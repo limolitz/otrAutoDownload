@@ -15,29 +15,29 @@ echo $$ > $lockFile
 echo -n "" > $tmpFile
 
 uniq $1/otrHappyHourLinks.txt | while read line; do
-   /bin/echo "Downloading $line"
+   /bin/echo "Downloading $(basename $line)"
    /usr/bin/aria2c $line -d $OTRDOWNLOADPATH -m 0 --retry-wait=30 --auto-file-renaming=false --on-download-complete= >/dev/null
    download=$?
    retry=false
    case $download in
    	0)
-				echo "$line downloaded."
+				echo "$(basename $line) downloaded."
 				;;
     13)
-				echo "File already exists."
+				echo "File $(basename $line)  already exists."
 				;;
     18)
      		echo "Error: aria2 could not create directory."
         retry=true
      		;;
     *)
-        echo "Error: $line not downloaded. Unhandled status $download"
+        echo "Error: $(basename $line) not downloaded. Unhandled status $download"
         retry=true
         ;;
     esac
     # if download file, add link again for next run
     if $retry ; then
-      echo "Retrying $line"
+      echo "Retrying $(basename $line)"
       echo $line >> $tmpFile
     fi
 done
