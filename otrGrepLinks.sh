@@ -9,15 +9,15 @@ outFile="/tmp/otr_grep.txt"
 
 source $1/otr.conf
 
-$1/dropboxUploader/dropbox_uploader.sh download $OTRDROPBOXPATH $inFile
+$1/dropboxUploader/dropbox_uploader.sh download $OTRDROPBOXPATH $inFile >/dev/null
 # Grep for torrent file as attachment
 /bin/grep -oP "filename=.*otrkey" $inFile | /bin/grep -oP "=.*" | /bin/grep -oP "[^=]*.otrkey$" >> $outFile
 # grep for torrent link
 /usr/bin/tr -d '=\n' < $inFile | /bin/grep -oP '"http://.*xbt_torrent_create.php[^"]*[a-z]"' | /bin/grep -oP "3D.*otrkey" | /bin/grep -oP '[^3D].*' >> $outFile
 # grep for direct download link for happy hour download
-/bin/grep -oP "http://[^>]*(otrkey|avi|mp4){1}" $inFile >> $1/otrHappyHourLinks.txt
+/bin/grep -oP "http://81\.95\.11[^>]*(otrkey|avi|mp4){1}" $inFile >> $1/otrHappyHourLinks.txt
 # grep for filename from direct download link for torrent download
-/bin/grep -oP "http://[^>]*(otrkey){1}" $inFile | grep -oP "[^/]*otrkey" >> $outFile
+/bin/grep -oP "http://81\.95\.11[^>]*(otrkey){1}" $inFile | grep -oP "[^/]*otrkey" >> $outFile
 cat $outFile | while read line; do
    # grep date from file
    date=$(/bin/echo $line | egrep -o "[0-9]{2}\.[0-9]{2}\.[0-9]{2}")
@@ -26,7 +26,7 @@ cat $outFile | while read line; do
    #/usr/bin/transmission-remote localhost -a "http://otr.dwolp.de/torrent_dl.php?datei=$line"
 done
 /bin/echo "" > $inFile
-$1/dropboxUploader/dropbox_uploader.sh upload $inFile $OTRDROPBOXPATH
+$1/dropboxUploader/dropbox_uploader.sh upload $inFile $OTRDROPBOXPATH >/dev/null
 /bin/rm $outFile
 /bin/rm $inFile
 
