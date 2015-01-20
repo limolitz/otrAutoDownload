@@ -9,7 +9,7 @@ OTRDOWNLOADPATH="/home/user/downloads"
 OTROUTPUTPATH="/home/user/Videos"
 
 # Path inside your Dropbox where the text of the EMail will arrive (via IFTTT)
-OTRDROPBOXPATH="ifttt/Gmail/otr.txt"
+OTRDROPBOXPATH="ifttt/otrAutoDownloader/otr.txt"
 
 # Where the qemu package is installed
 # Get it here: http://kdserv.dyndns.org/2013-09-09-otr-chroot.tar.bz2.torrent
