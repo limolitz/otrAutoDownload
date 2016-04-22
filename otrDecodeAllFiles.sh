@@ -48,6 +48,8 @@ find $OTRDOWNLOADPATH/*.otrkey 2>/dev/null | while read file; do
             else
                 echo "Error while decoding $mediafile: $RETVAL2" >> $logFile
                 echo "Error while decoding $mediafile: $RETVAL2"
+		# store nevertheless to avoid multiple decoding attempts
+		echo $mediafile >> $1/otrDecoded.txt
             fi
         else
             echo "$mediafile already decoded once." >> $logFile
