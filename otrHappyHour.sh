@@ -24,7 +24,7 @@ uniq $1/otrHappyHourLinks.txt | while read line; do
       echo "$filename downloaded."
       # tell transmission to verify this file
       # find out torrent ID
-      torrentId=$($1/otrTransmission.sh $1 -l | grep "$filename" | awk '{ print $1; }')
+      torrentId=$($1/otrTransmission.sh $1 -v -l | grep "$filename" | awk '{ print $1; }')
       echo "Torrent ID is $torrentId"
       # tell transmission to verify
       $1/otrTransmission.sh $1 -t $torrentId -v
