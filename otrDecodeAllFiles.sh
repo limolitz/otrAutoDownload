@@ -38,12 +38,15 @@ find $OTRDOWNLOADPATH/*.otrkey 2>/dev/null | while read file; do
         if [ $RETVAL -eq 1 ]
         then
             echo "Decode $mediafile" >> $logFile
-            $1/otrDecode.sh $1 $file
+            $1/otrDecode.sh $1 $file >> $logFile
             RETVAL2=$?
             if [ $RETVAL2 -eq 0 ]
             then
                 echo "$mediafile successfully decoded." >> $logFile
                 echo "$mediafile successfully decoded."
+                # tell MQTT
+                json=$(printf '{"topic": "otrAutoDownload","measurements": {"decodedFile": "%s"}}' "$mediafile")
+                echo "$json" | /home/florin/bin/mqttsend/mqttsend.sh
                 echo $mediafile >> $1/otrDecoded.txt
             else
                 echo "Error while decoding $mediafile: $RETVAL2" >> $logFile
