@@ -33,8 +33,8 @@ else
   #echo "$startTime vs. $currentTime"
   if (( $currentTime > $startTime && $currentTime < $endTime ))
   then
-    echo "Start Happy Hour Downloads."
-    $otrAutoDownloadPath/otrHappyHour.sh $otrAutoDownloadPath &
+    #echo "Start Happy Hour Downloads."
+    $otrAutoDownloadPath/otrHappyHour.sh $otrAutoDownloadPath
   else
     #echo "Don't start Happy Hour Script."
     true
@@ -42,4 +42,4 @@ else
 fi
 
 # decode new files
-$otrAutoDownloadPath/otrDecodeAllFiles.sh $otrAutoDownloadPath &
+$otrAutoDownloadPath/otrDecodeAllFiles.sh $otrAutoDownloadPath
