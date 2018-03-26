@@ -15,7 +15,7 @@ for inFile in $OTRINCOMINGMAILSPATH/*; do
 		#/usr/bin/tr -d '=\n' < $inFile | /bin/grep -oP '"http://.*xbt_torrent_create.php[^"]*[a-z]"' | /bin/grep -oP "3D.*otrkey" | /bin/grep -oP '[^3D].*' >> $outFile
 
 		# grep for direct download link for happy hour download
-		directDownload=$(/bin/grep -oP "http://81\.95\.11[^>]*(otrkey|avi|mp4){1}" $inFile)
+		directDownload=$(/bin/grep -oP "http://[81\.95\.11|93\.115\.84][^>]*(otrkey|avi|mp4){1}" $inFile)
 		if test $? -ne 0; then
 			subject=$(cat "$inFile" | grep "Subject: ")
 			mailDate=$(cat "$inFile" | grep "Date: ")
