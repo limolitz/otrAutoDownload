@@ -18,16 +18,25 @@ fi
 
 response=$(/usr/bin/transmission-remote localhost --auth $OTRTRANSMISSIONUSER:$OTRTRANSMISSIONPASSWORD $args)
 
-if test $verbose -eq 0; then
-	echo "$response"
-fi
+echo "$args: $response" >> otrTransmission.log
 
-# TODO: this is not really working
-success=$(echo "$response" |  grep "success")
-if test $? -eq 0; then
-	echo "$args: $response" >> otrTransmission.log
-	exit 0
+# if we got the -a (add) option or -t (specific torrent), check if we had success
+if [ "${args:0:2}" == "-a" ] || [ "${args:0:2}" == "-t" ]; then
+	success=$(echo "$response" |  grep "success")
+	if test $verbose -eq 0; then
+		echo "$response"
+	fi
+	if test $? -eq 0; then
+		exit 0
+	else
+		echo "$response" 1>&2
+		exit 1
+	fi
+elif [ "${args:0:2}" == "-l" ]; then
+	# always print for -l (list) option
+	echo "$response"
 else
-	echo "$response" 1>&2
-	exit 1
+	if test $verbose -eq 0; then
+		echo "$response"
+	fi
 fi
