@@ -19,6 +19,7 @@ uniq $1/otrHappyHourLinks.txt | while read line; do
   /usr/bin/aria2c $line -d $OTRDOWNLOADPATH -m 0 --retry-wait=30 --auto-file-renaming=false --on-download-complete= >/dev/null
   download=$?
   retry=false
+  # TODO: check if this is a direct download from OTR and defer it if we are not in the happy hour
   case $download in
     0)
       echo "$filename downloaded."
@@ -26,6 +27,9 @@ uniq $1/otrHappyHourLinks.txt | while read line; do
       # find out torrent ID
       torrentId=$($1/otrTransmission.sh $1 -v -l | grep "$filename" | awk '{ print $1; }')
       echo "Torrent ID is $torrentId"
+      # TODO: check if we got torrent ID
+      # TODO: maybe try to add torrent if we didn't get an ID?
+
       # tell transmission to verify
       $1/otrTransmission.sh $1 -t $torrentId -v
       # tell MQTT
