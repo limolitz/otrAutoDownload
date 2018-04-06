@@ -13,13 +13,33 @@ touch $lockFile
 echo $$ > $lockFile
 echo -n "" > $tmpFile
 
+startTime=$(($OTRSTARTHAPPYHOURHOUR*60+$OTRSTARTHAPPYHOURMINUTE))
+endTime=$(($OTRENDHAPPYHOURHOUR*60+$OTRENDHAPPYHOURMINUTE))
+
 uniq $1/otrHappyHourLinks.txt | while read line; do
   filename=$(basename $line)
   /bin/echo "Downloading $filename"
+  # check if this is a direct download from OTR and defer it if we are not in the happy hour
+  directDownload=$(echo "$line" | /bin/grep -oP "http(s)?://[81\.95\.11|93\.115\.84|static\.onlinetvrecorder\.com][^>]*(otrkey|avi|mp4){1}")
+  if test $? -eq 0; then
+    echo "This is a direct download."
+    # check if we are in happy hour
+    currentTime=$(($(env TZ=Europe/Berlin date +%_H)*60+$(env TZ=Europe/Berlin date +%_M)))
+    #echo "$startTime vs. $currentTime"
+    if (( $currentTime > $startTime && $currentTime < $endTime )); then
+      echo "Start Happy Hour Download."
+    else
+      echo "Don't start Happy Hour downloads, deferring."
+      echo $line >> $tmpFile
+      continue
+    fi
+  fi
+
+  # do the actual download
   /usr/bin/aria2c $line -d $OTRDOWNLOADPATH -m 0 --retry-wait=30 --auto-file-renaming=false --on-download-complete= >/dev/null
   download=$?
   retry=false
-  # TODO: check if this is a direct download from OTR and defer it if we are not in the happy hour
+
   case $download in
     0)
       echo "$filename downloaded."
