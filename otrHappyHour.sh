@@ -18,21 +18,23 @@ endTime=$(($OTRENDHAPPYHOURHOUR*60+$OTRENDHAPPYHOURMINUTE))
 
 uniq $1/otrHappyHourLinks.txt | while read line; do
   filename=$(basename $line)
-  /bin/echo "Downloading $filename"
+  host=$(echo "$line" | awk -F/ '{print $3}')
   # check if this is a direct download from OTR and defer it if we are not in the happy hour
-  directDownload=$(echo "$line" | /bin/grep -oP "http(s)?://[81\.95\.11|93\.115\.84|static\.onlinetvrecorder\.com][^>]*(otrkey|avi|mp4){1}")
+  directDownload=$(echo "$line" | /bin/grep -oP "(81\.95\.11|93\.115\.84|static\.onlinetvrecorder\.com)")
   if test $? -eq 0; then
     echo "This is a direct download."
     # check if we are in happy hour
     currentTime=$(($(env TZ=Europe/Berlin date +%_H)*60+$(env TZ=Europe/Berlin date +%_M)))
     #echo "$startTime vs. $currentTime"
     if (( $currentTime > $startTime && $currentTime < $endTime )); then
-      echo "Start Happy Hour Download."
+      echo "Start Happy Hour Download of $filename."
     else
       echo "Don't start Happy Hour downloads, deferring."
       echo $line >> $tmpFile
       continue
     fi
+  else
+    echo "Start Mirror Download from $host of $filename."
   fi
 
   # do the actual download
