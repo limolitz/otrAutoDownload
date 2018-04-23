@@ -14,7 +14,7 @@ Install
 ```
 
 )
-* Clone into your ~/bin (create folder if not existing):
+* Clone into your ~/bin (create folder if it does not exist already):
 
 ```bash
  cd && [ -d bin ] || mkdir bin
@@ -42,6 +42,29 @@ Install
  42 * * * * /home/$USER/bin/otrAutoDownload/cron.sh
 ```
 
-* Put emails from OTR into the folder set in OTRINCOMINGMAILSPATH, e.g. via a cronjob.
+* Put emails from OTR into the folder set in OTRINCOMINGMAILSPATH, e.g. via another cronjob.
+
+Example rule for maildrop:
+```
+if (/^From:.*webmaster@onlinetvrecorder\.com/:h)
+{
+        to "$MAILDIR/.otrAutoDownloader"
+}
+```
+Then, set the OTRINCOMINGMAILSPATH to $MAILDIR/.otrAutoDownloader/cur. I have a script in place which copies the mail from my mailserver to the server which does the downloading and decoding. This is rather short. It uses a sub-folder inside otrAutoDownloader, named $remotePathOld in this script, where old, already parsed mails are stored:
+```bash
+fileCount=$(/usr/bin/ssh $server "ls $remotePath/cur/" | wc -l)
+echo "File Count: $fileCount" >> $logFile
+if [ ! "$fileCount" = "0" ]; then
+  echo "$fileCount mails on remote server."
+  # copy all mails from remotePath to localPath
+  /usr/bin/scp -r $server:"$remotePath/cur/*" $localPath
+
+  # move to subfolder
+  /usr/bin/ssh $server "mv $remotePath/cur/* $remotePathOld/cur/"
+else
+  echo "No copying" >> $logFile
+fi
+```
 
 * Enjoy!
