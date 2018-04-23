@@ -23,10 +23,10 @@ echo "$args: $response" >> otrTransmission.log
 # if we got the -a (add) option or -t (specific torrent), check if we had success
 if [ "${args:0:2}" == "-a" ] || [ "${args:0:2}" == "-t" ]; then
 	success=$(echo "$response" |  grep "success")
-	if test $verbose -eq 0; then
-		echo "$response"
-	fi
 	if test $? -eq 0; then
+		if test $verbose -eq 0; then
+			echo "$response"
+		fi
 		exit 0
 	else
 		echo "$response" 1>&2
